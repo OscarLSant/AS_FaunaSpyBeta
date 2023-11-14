@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView android:id="@+id/card"
+    layout_width="match_parent"
+    layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="350dp"
+    android:layout_gravity="center|top"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true"
+    android:layout_marginBottom="-25dp"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/img1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <TextView
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nametext"
+            android:text="Specie name"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/img1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_genero"
+            android:paddingTop="5dp"
+            android:text="Género: "
+            android:textSize="12dp"
+            android:layout_toRightOf="@id/img1"
+            android:layout_below="@id/nametext"
+            />
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/gendertext"
+            android:text="Email id"
+            android:textSize="12dp"
+            android:layout_toRightOf="@id/tv_genero"
+            android:paddingTop="5dp"
+            android:layout_below="@id/nametext"
+            android:layout_marginLeft="1dp"
+            android:paddingBottom="15dp"
+            />
+
+        <Button
+            android:id="@+id/btndetails"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/svg_flechadetalles"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="270dp"
+            />
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

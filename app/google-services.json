@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "693313655185",
+    "project_id": "faunaspy-1aa7d",
+    "storage_bucket": "faunaspy-1aa7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693313655185:android:04bf25487f812a663d0a30",
+        "android_client_info": {
+          "package_name": "com.example.as_faunaspyv3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3U7Kjskzid49_2t_I8AsQ0O3IsCgGv28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

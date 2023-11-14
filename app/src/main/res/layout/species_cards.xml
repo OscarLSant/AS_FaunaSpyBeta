@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:elevation="15dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/img1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nametext"
+            android:text="Specie name"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_toRightOf="@id/img1"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_genero"
+            android:paddingTop="10dp"
+            android:text="Género: "
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/img1"
+            android:layout_below="@id/nametext"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gendertext"
+            android:text="Email id"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/tv_genero"
+            android:paddingTop="10dp"
+            android:layout_below="@id/nametext"
+            android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>
+
