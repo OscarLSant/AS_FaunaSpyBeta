@@ -15,6 +15,64 @@ import android.view.ViewGroup;
  */
 public class speciesDetailsFragment extends Fragment {
 
+     private String name, nameCard, gender, description, imgHeader, imgCard;
+
+    public speciesDetailsFragment(String name, String nameCard, String gender, String description, String imgHeader) {
+        this.name = name;
+        this.nameCard = nameCard;
+        this.gender = gender;
+        this.description = description;
+        this.imgHeader = imgHeader;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameCard() {
+        return nameCard;
+    }
+
+    public void setNameCard(String nameCard) {
+        this.nameCard = nameCard;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImgHeader() {
+        return imgHeader;
+    }
+
+    public void setImgHeader(String imgHeader) {
+        this.imgHeader = imgHeader;
+    }
+
+    public String getImgCard() {
+        return imgCard;
+    }
+
+    public void setImgCard(String imgCard) {
+        this.imgCard = imgCard;
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +117,8 @@ public class speciesDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_species_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_species_details, container, false);
+
+        return view;
     }
 }

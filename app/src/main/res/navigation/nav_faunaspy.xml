@@ -18,7 +18,11 @@
         android:id="@+id/speciesFragment"
         android:name="com.example.as_faunaspyv3.speciesFragment"
         android:label="fragment_species"
-        tools:layout="@layout/fragment_species" />
+        tools:layout="@layout/fragment_species" >
+        <action
+            android:id="@+id/action_speciesFragment_to_speciesDetailsFragment"
+            app:destination="@id/speciesDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.as_faunaspyv3.accountFragment"
@@ -26,7 +30,12 @@
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.as_faunaspyv3.addFragment"
+        android:name="com.example.as_faunaspyv3.addAvistament"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/speciesDetailsFragment"
+        android:name="com.example.as_faunaspyv3.speciesDetailsFragment"
+        android:label="fragment_species_details"
+        tools:layout="@layout/fragment_species_details" />
 </navigation>

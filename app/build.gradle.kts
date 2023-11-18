@@ -58,4 +58,13 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation ("com.google.android.material:material:1.10.0")
+
+    // selector de imagenes
+    implementation ("pub.devrel:easypermissions:3.0.0")
+    //implementation ("com.droidninja:filepicker:2.2.5")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation ("androidx.fragment:fragment:1.3.6")
+
 }
