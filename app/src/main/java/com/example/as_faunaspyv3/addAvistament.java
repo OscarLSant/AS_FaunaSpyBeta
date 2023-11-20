@@ -1,30 +1,52 @@
 package com.example.as_faunaspyv3;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.database.Cursor;
+
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.loader.content.CursorLoader;
 
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -36,8 +58,22 @@ import java.util.Map;
  */
 public class addAvistament extends Fragment {
 
-    EditText etDate, etTime, img, specie;
-    Button btnDate, btnTime, save;
+
+
+    private EditText etDate, etTime, specie, et_location;
+    private Button btnDate, btnTime, selectImage, save;
+
+    // selección de imagen
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private ImageView imageView;
+
+
+    //para hacer la subida a firebase
+    private Uri selectedImageUri;
+    private ProgressBar progressBar;
+    private String downloadUrl;
+
+    addGetImage gi;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,15 +121,27 @@ public class addAvistament extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_add, container, false);
 
-        img = (EditText) view.findViewById(R.id.edt_img);
         specie = (EditText) view.findViewById(R.id.edt_specie);
         etDate = (EditText) view.findViewById(R.id.edt_date);
         etTime = (EditText) view.findViewById(R.id.edt_time);
+        et_location = (EditText)   view.findViewById(R.id.edt_location);
 
         btnDate = (Button) view.findViewById(R.id.btndate);
         btnTime = (Button) view.findViewById(R.id.btntime);
         save = (Button) view.findViewById(R.id.btnAdd);
 
+        selectImage = (Button) view.findViewById(R.id.btnSelectImage);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+        gi = new addGetImage();
+
+        selectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGalery();
+            }
+        });
 
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,22 +161,136 @@ public class addAvistament extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(img.getText().toString()) || TextUtils.isEmpty(specie.getText().toString()) || TextUtils.isEmpty(etTime.getText().toString()) || TextUtils.isEmpty(etDate.getText().toString())) {
-                    Toast.makeText(requireContext(), "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
-                } else insertData();
+                if (TextUtils.isEmpty(specie.getText().toString()) || TextUtils.isEmpty(etTime.getText().toString()) || TextUtils.isEmpty(etDate.getText().toString())) {
+                    Snackbar.make(requireView(), "Asegurese de llenar todos los campos", Snackbar.LENGTH_SHORT).show();
+
+                } else
+                    uploadImage();
             }
         });
 
         return view;
     }
 
+    private void openGalery(){
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUri = data.getData();
+
+            // Obtener la ruta de la imagen directamente desde el Uri
+            String imagePath = getRealPathFromURI(selectedImageUri);
+
+            // Obtener y mostrar los metadatos de la imagen
+            displayImageMetadata(imagePath);
+            imageView.setImageURI(selectedImageUri);
+        }
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(requireContext(), contentUri, projection, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();  // Cerrar el cursor
+
+        return result;
+    }
+
+    private void displayImageMetadata(String imagePath) {
+        try {
+            android.media.ExifInterface exifInterface = new android.media.ExifInterface(imagePath);
+
+            // Obtener la fecha y hora de la imagen
+            String dateTime = exifInterface.getAttribute(android.media.ExifInterface.TAG_DATETIME);
+            if (dateTime != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.getDefault());
+                try {
+                    Date date = dateFormat.parse(dateTime);
+
+                    // Mostrar la fecha y hora en los EditText correspondientes
+                    SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    SimpleDateFormat displayTimeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    etDate.setText(displayDateFormat.format(date));
+                    etTime.setText(displayTimeFormat.format(date));
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ImageMetadata", "DateTime is null");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void uploadImage(){
+        if(selectedImageUri != null){
+            StorageReference sr = FirebaseStorage.getInstance().getReference().child("images/" + System.currentTimeMillis() + ".jpg");
+
+            sr.putFile(selectedImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(0);
+                                }
+                            }, 500);
+
+                            Snackbar.make(requireView(), "Imagen cargada exitosamente", Snackbar.LENGTH_SHORT).show();
+
+                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    //después de hacer la subida a Storage se obtiene la url de la imagen y se ejecuta el método de inserción de datos
+                                    String url = uri.toString();
+                                    gi.setUrlImage(url);
+                                    insertData();
+                                }
+                            });
+                        }
+                    })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Snackbar.make(requireView(), "Error al cargar la imagen", Snackbar.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                    progressBar.setProgress((int)progress);
+                }
+            });
+
+        } else {
+            Snackbar.make(requireView(), "Aún no ha seleccionado una fotografía", Snackbar.LENGTH_SHORT).show();
+
+        }
+    }
+
+
     private void insertData(){
         Map<String, Object> map = new HashMap<>();
-        map.put("img", img.getText().toString());
+        map.put("img", "img" + gi.getUrlImage());
         map.put("specie", specie.getText().toString());
         map.put("date", etDate.getText().toString());
         map.put("time", etTime.getText().toString());
-        map.put("locatoin", "location");
+        map.put("location", et_location.getText().toString());
         map.put("description", "description chida");
 
         FirebaseDatabase.getInstance().getReference().child("avistments").push()
@@ -136,9 +298,9 @@ public class addAvistament extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(requireContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
-                        // aquí quiero que se cierre el fragment actual y se retorne al anterior
+                        Snackbar.make(requireView(), "Registro exitoso", Snackbar.LENGTH_SHORT).show();
 
+                        // aquí quiero que se cierre el fragment actual y se retorne al anterior
                         // Obtener la actividad que contiene los fragments
                         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
@@ -152,7 +314,8 @@ public class addAvistament extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(requireContext(), "Error al registrar", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(requireView(), "Error al registrar la información", Snackbar.LENGTH_SHORT).show();
+
                     }
                 });
     }
@@ -187,4 +350,5 @@ public class addAvistament extends Fragment {
         }, hourOfDay, minute, true);
         t.show();
     }
+
 }
