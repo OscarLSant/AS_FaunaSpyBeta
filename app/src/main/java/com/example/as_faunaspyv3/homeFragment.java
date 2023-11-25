@@ -7,12 +7,17 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +25,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class homeFragment extends Fragment {
+
+    RecyclerView recyclerView;
+    HomeAdapter homeAdapter;
 
     FloatingActionButton floatingActionButton;
 
@@ -69,6 +77,18 @@ public class homeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
+        recyclerView = (RecyclerView)   view.findViewById(R.id.rv);
+        int snapCount = 2;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), snapCount);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        FirebaseRecyclerOptions<HomeModel> options =
+                new FirebaseRecyclerOptions.Builder<HomeModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("avistments"), HomeModel.class)
+                        .build();
+        homeAdapter = new HomeAdapter(options);
+        recyclerView.setAdapter(homeAdapter);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,5 +98,9 @@ public class homeFragment extends Fragment {
         return view;
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        homeAdapter.startListening();
+    }
 }

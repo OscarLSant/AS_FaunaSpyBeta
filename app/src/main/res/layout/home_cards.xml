@@ -1,57 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center|top"
+    app:cardElevation="8dp"
     app:cardCornerRadius="10dp"
-    android:elevation="15dp"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="8dp"
+    android:layout_marginBottom="-25dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="15dp">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@mipmap/ic_launcher"
             android:id="@+id/details_img1"
-            rounded
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_imageview"
             />
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/details_nametext"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/details_img1"
+            android:layout_alignBottom="@+id/details_img1"
+            android:layout_marginTop="123dp"
+            android:paddingLeft="3dp"
+            android:background="#80000000"
+            android:textColor="@color/cardview_light_background"
+            android:layout_marginBottom="0dp"
             android:text="Specie name"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_toRightOf="@id/details_img1"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_genero"
-            android:paddingTop="10dp"
-            android:text="Génerooo: "
-            android:textSize="20sp"
-            android:layout_toRightOf="@id/details_img1"
-            android:layout_below="@id/details_nametext"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_gendertext"
-            android:text="Email id"
-            android:textSize="20sp"
-            android:layout_toRightOf="@id/tv_genero"
-            android:paddingTop="10dp"
-            android:layout_below="@id/details_nametext"
-            android:layout_marginLeft="10dp"/>
+            android:foregroundGravity="center_vertical"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"

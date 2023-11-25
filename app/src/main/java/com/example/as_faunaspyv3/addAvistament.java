@@ -36,6 +36,8 @@ import android.widget.TimePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -60,7 +62,7 @@ public class addAvistament extends Fragment {
 
 
 
-    private EditText etDate, etTime, specie, et_location;
+    private TextInputEditText etDate, etTime, specie, et_location;
     private Button btnDate, btnTime, selectImage, save;
 
     // selección de imagen
@@ -121,10 +123,10 @@ public class addAvistament extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_add, container, false);
 
-        specie = (EditText) view.findViewById(R.id.edt_specie);
-        etDate = (EditText) view.findViewById(R.id.edt_date);
-        etTime = (EditText) view.findViewById(R.id.edt_time);
-        et_location = (EditText)   view.findViewById(R.id.edt_location);
+        specie = (TextInputEditText) view.findViewById(R.id.edt_specie);
+        etDate = (TextInputEditText) view.findViewById(R.id.edt_date);
+        etTime = (TextInputEditText) view.findViewById(R.id.edt_time);
+        et_location = (TextInputEditText)   view.findViewById(R.id.edt_location);
 
         btnDate = (Button) view.findViewById(R.id.btndate);
         btnTime = (Button) view.findViewById(R.id.btntime);
@@ -286,7 +288,7 @@ public class addAvistament extends Fragment {
 
     private void insertData(){
         Map<String, Object> map = new HashMap<>();
-        map.put("img", "img" + gi.getUrlImage());
+        map.put("img", gi.getUrlImage());
         map.put("specie", specie.getText().toString());
         map.put("date", etDate.getText().toString());
         map.put("time", etTime.getText().toString());
