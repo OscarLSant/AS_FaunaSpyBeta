@@ -32,10 +32,19 @@
         android:id="@+id/addFragment"
         android:name="com.example.as_faunaspyv3.addAvistament"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_addFragment_to_addLocationFragment"
+            app:destination="@id/addLocationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/speciesDetailsFragment"
         android:name="com.example.as_faunaspyv3.speciesDetailsFragment"
         android:label="fragment_species_details"
         tools:layout="@layout/fragment_species_details" />
+    <fragment
+        android:id="@+id/addLocationFragment"
+        android:name="com.example.as_faunaspyv3.addLocationFragment"
+        android:label="fragment_add_location"
+        tools:layout="@layout/fragment_add_location" />
 </navigation>

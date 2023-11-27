@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.CursorLoader;
+import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -53,22 +54,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link addAvistament#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class addAvistament extends Fragment {
 
-
-
+    //private addGetLocation getLocation;
+    //public addGetLocation getLocationClass = new addGetLocation();
     private TextInputEditText etDate, etTime, specie, et_location;
-    private Button btnDate, btnTime, selectImage, save;
+    private Button btnDate, btnTime, selectImage, save, btnlocation;
 
     // selección de imagen
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imageView;
-
 
     //para hacer la subida a firebase
     private Uri selectedImageUri;
@@ -90,15 +85,6 @@ public class addAvistament extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment addFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static addAvistament newInstance(String param1, String param2) {
         addAvistament fragment = new addAvistament();
         Bundle args = new Bundle();
@@ -120,6 +106,9 @@ public class addAvistament extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_add, container, false);
 
@@ -130,6 +119,7 @@ public class addAvistament extends Fragment {
 
         btnDate = (Button) view.findViewById(R.id.btndate);
         btnTime = (Button) view.findViewById(R.id.btntime);
+        btnlocation = (Button)  view.findViewById(R.id.btnlocation);
         save = (Button) view.findViewById(R.id.btnAdd);
 
         selectImage = (Button) view.findViewById(R.id.btnSelectImage);
@@ -156,6 +146,19 @@ public class addAvistament extends Fragment {
             @Override
             public void onClick(View v) {
                 mostrarReloj();
+            }
+        });
+
+        btnlocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*addLocationFragment addLocationFragment = new addLocationFragment();
+
+                // Configurar el objeto getLocationClass en el fragmento de destino
+                addLocationFragment.setLocationData(getLocationClass);*/
+
+                Navigation.findNavController(view).navigate(R.id.action_addFragment_to_addLocationFragment);
             }
         });
 
@@ -224,6 +227,8 @@ public class addAvistament extends Fragment {
                     SimpleDateFormat displayTimeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                     etDate.setText(displayDateFormat.format(date));
                     etTime.setText(displayTimeFormat.format(date));
+                    //et_location.setText(this.getLocationClass.getLatitude() + ", " + this.getLocationClass.getLongitude());
+                    et_location.setText("0");
 
                 } catch (ParseException e) {
                     e.printStackTrace();
