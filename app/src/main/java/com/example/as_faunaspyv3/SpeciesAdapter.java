@@ -2,6 +2,7 @@ package com.example.as_faunaspyv3;
 
 import android.content.Context;
 import android.media.Image;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -49,14 +51,21 @@ public class SpeciesAdapter extends FirebaseRecyclerAdapter<SpeciesModel, Specie
             @Override
             public void onClick(View v) {
 
-                /*TextView name = v.findViewById(R.id.details_name);
-                TextView nameCard = v.findViewById(R.id.details_nametext);
-                TextView gender = v.findViewById(R.id.details_gendertext);
-                TextView description = v.findViewById(R.id.details_desctiption);
-                ImageView imgHeader = v.findViewById(R.id.details_imageheader);
-                ImageView imageCard = v.findViewById(R.id.details_img1);*/
+                Bundle bundle = new Bundle();
+                // setear los valores obtenidos de la base de datos a los campos
+                bundle.putString("name", model.getName());
+                bundle.putString("gender", model.getGender());
+                bundle.putString("img", model.getImg());
+                bundle.putString("description", model.getDescription());
+                //bundle.putInt("position", position);
+                bundle.putString("key", getRef(position).getKey());
 
-                LayoutInflater inflater = (LayoutInflater) holder.img.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                AccountEditRegister editFragment = new AccountEditRegister();
+                editFragment.setArguments(bundle);
+
+                Navigation.findNavController(v).navigate(R.id.action_speciesFragment_to_speciesDetailsFragment, bundle);
+
+                /*LayoutInflater inflater = (LayoutInflater) holder.img.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View detailsView = inflater.inflate(R.layout.species_details, null);
 
                 TextView name = detailsView.findViewById(R.id.details_name);
@@ -88,7 +97,7 @@ public class SpeciesAdapter extends FirebaseRecyclerAdapter<SpeciesModel, Specie
 
                 ViewGroup container = (ViewGroup) holder.btnDetails.getParent();
                 container.removeAllViews();
-                container.addView(detailsView);
+                container.addView(detailsView);*/
             }
         });
     }

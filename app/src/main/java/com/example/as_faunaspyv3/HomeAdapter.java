@@ -1,5 +1,6 @@
 package com.example.as_faunaspyv3;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,28 @@ public class HomeAdapter extends FirebaseRecyclerAdapter<HomeModel, HomeAdapter.
                 .load(model.img)
                 .placeholder(R.drawable.svg_errorimage)
                 .into(holder.img);
+
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                // setear los valores obtenidos de la base de datos a los campos
+                bundle.putString("specie", model.getSpecie());
+                bundle.putString("location", model.getLocation());
+                bundle.putString("date", model.getDate());
+                bundle.putString("time", model.getTime());
+                bundle.putString("img", model.getImg().toString());
+                bundle.putString("author", model.getAuthor());
+                bundle.putString("specieId", model.getSpecieId());
+                bundle.putString("key", getRef(position).getKey());
+
+
+                HomeDetailsFragment homeDetailsFragment = new HomeDetailsFragment();
+                homeDetailsFragment.setArguments(bundle);
+
+                Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_homeDetailsFragment, bundle);
+            }
+        });
     }
 
     @NonNull
@@ -48,9 +72,8 @@ public class HomeAdapter extends FirebaseRecyclerAdapter<HomeModel, HomeAdapter.
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.details_img1);
+            img = (ImageView) itemView.findViewById(R.id.home_img);
             nameSpecie = (TextView) itemView.findViewById(R.id.details_nametext);
         }
     }
-
 }

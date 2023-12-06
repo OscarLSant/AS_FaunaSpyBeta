@@ -65,20 +65,27 @@ public class MainActivity extends AppCompatActivity {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    private void showSnackbarWithInternetCheck(String message, int duration) {
+    private Snackbar showSnackbarWithInternetCheck() {
         View rootView = findViewById(android.R.id.content);
+        String message = null;
 
         if (isNetworkConnected()) {
             if (!wasConnected) {
-                Snackbar.make(rootView, "De nuevo en línea", Snackbar.LENGTH_LONG).show();
                 wasConnected = true;
-            } else {
-                Snackbar.make(rootView, message, duration).show();
+                message = "Se restauró la conexión a internet.";
             }
+            // Puedes agregar más lógica aquí si es necesario
         } else {
-            Snackbar.make(rootView, "Sin internet. Por favor, conéctese a la red.", Snackbar.LENGTH_LONG).show();
             wasConnected = false;
+            message = "En este momento no tienes conexión.";
         }
+
+        if (message != null) {
+            return Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        }
+
+        // Si no hay mensaje, devolver una Snackbar vacía
+        return null;
     }
 
     // BroadcastReceiver para detectar cambios en la conectividad
@@ -87,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
                 // Verificar el estado de la conectividad al recibir la acción de cambio de conectividad
-                //showSnackbarWithInternetCheck("Tu mensaje aquí", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = showSnackbarWithInternetCheck();
+                if (snackbar != null) {
+                    snackbar.show();
+                }
             }
         }
     }

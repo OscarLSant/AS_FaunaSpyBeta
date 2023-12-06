@@ -1,18 +1,28 @@
 package com.example.as_faunaspyv3;
 
 public class HomeModel {
-    String specie, location, time, date, description, img;
+    String specie, location, time, date, description, img, author, specieId;
 
     public HomeModel() {
     }
 
-    public HomeModel(String specie, String location, String time, String date, String description, String img) {
+    public HomeModel(String specie, String location, String time, String date, String description, String img, String author, String specieId) {
         this.specie = specie;
         this.location = location;
         this.time = time;
         this.date = date;
         this.description = description;
         this.img = img;
+        this.author = author;
+        this.specieId = specieId;
+    }
+
+    public String getSpecieId() {
+        return specieId;
+    }
+
+    public void setSpecieId(String specieId) {
+        this.specieId = specieId;
     }
 
     public String getSpecie() {
@@ -61,5 +71,13 @@ public class HomeModel {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -1,14 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".accountFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardCornerRadius="30dp"
+            android:elevation="20dp"
+            android:layout_margin="30dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:id="@+id/user_profileimage"
+                    />
+            </LinearLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hola, "
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:id="@+id/hola"
+                    android:layout_marginLeft="45dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="nombre"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:id="@+id/user_nombre"
+                    android:layout_toRightOf="@id/hola"
+                    android:layout_marginLeft="1dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="!"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@id/user_nombre"
+                    android:layout_marginLeft="1dp"
+                    />
+
+
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
+                >
+
+                <!--
+                <Button
+                    android:id="@+id/user_edit"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/svg_create"
+                    android:layout_marginBottom="10dp"
+                    /> -->
+
+                <!-- <Button
+                    android:id="@+id/user_logout"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/svg_logout"
+                    /> -->
+
+                <Button
+                    android:id="@+id/user_logout"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/svg_configuration"
+                    />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/mensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estos son tus registros."
+            android:textSize="25dp"
+            android:layout_marginLeft="30dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ACCOUNT" />
+        android:layout_marginTop="200dp"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            app:spanCount="2" />
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -1,14 +1,12 @@
 package com.example.as_faunaspyv3;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class homeFragment extends Fragment {
 
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String TOOLTIP_KEY_HOME = "tooltipShownHome";
     RecyclerView recyclerView;
     HomeAdapter homeAdapter;
 
@@ -77,14 +79,29 @@ public class homeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
+        // Verificar si el tooltip ya se ha mostrado antes en este fragmento
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean tooltipShown = sharedPreferences.getBoolean(TOOLTIP_KEY_HOME, false);
+
+        if (!tooltipShown) {
+            // Mostrar el tooltip por primera vez
+            showTooltip(floatingActionButton, "Hola, bienvenido a FaunaSpy. \n\nEn este sitio puedes registrar avistamientos de especies en tu región, así como explorar los registros realizados por otros usuarios.");
+
+            // Actualizar el estado para indicar que el tooltip se ha mostrado
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(TOOLTIP_KEY_HOME, true);
+            editor.apply();
+        }
+
         recyclerView = (RecyclerView)   view.findViewById(R.id.rv);
+
         int snapCount = 2;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), snapCount);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         FirebaseRecyclerOptions<HomeModel> options =
                 new FirebaseRecyclerOptions.Builder<HomeModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("avistments"), HomeModel.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("avistments").orderByChild("timestamp"), HomeModel.class)
                         .build();
         homeAdapter = new HomeAdapter(options);
         recyclerView.setAdapter(homeAdapter);
@@ -102,5 +119,12 @@ public class homeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         homeAdapter.startListening();
+    }
+
+    private void showTooltip(View view, String message) {
+        TapTargetView.showFor(requireActivity(),
+                TapTarget.forView(view, message)
+                        .cancelable(false)
+                        .tintTarget(true));
     }
 }

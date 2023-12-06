@@ -27,8 +27,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Registra avistamiento."
-                android:textSize="25sp"
+                android:text="Registra un avistamiento."
+                android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.22"
@@ -157,9 +157,11 @@
             tools:layout_editor_absoluteX="0dp" />
 -->
 
+
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputs"
-            android:layout_width="250dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:hint="Especie"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -167,19 +169,23 @@
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.449">
+            app:layout_constraintVertical_bias="0.449"
+            >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/edt_specie"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="80dp"
+                android:inputType="none"
+                tools:layout_editor_absoluteY="383dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="250dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:hint="Fecha de descibrimiento"
+            android:hint="Fecha de descubrimiento"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
@@ -192,11 +198,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout_editor_absoluteX="80dp"
+                android:inputType="numberDecimal"
                 tools:layout_editor_absoluteY="383dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="250dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:hint="Localización"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -211,13 +218,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout_editor_absoluteX="80dp"
+                android:inputType="number"
                 tools:layout_editor_absoluteY="383dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="250dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:hint="Hora de descibrimiento"
+            android:hint="Hora de descubrimiento"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
@@ -229,6 +237,7 @@
                 android:id="@+id/edt_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="numberSigned"
                 tools:layout_editor_absoluteX="80dp"
                 tools:layout_editor_absoluteY="383dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -249,6 +258,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.973" />
 
+
         <Button
             android:id="@+id/btnSelectImage"
             android:layout_width="wrap_content"
@@ -257,26 +267,24 @@
             android:text="Selecciona fotografía"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.158" />
+            app:layout_constraintVertical_bias="0.345"
+            />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="14dp"
+            android:layout_width="170dp"
+            android:layout_height="120dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/svg_image"
+            android:src="@drawable/svg_selectimage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.265" />
-
-
+            app:layout_constraintVertical_bias="0.137" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -294,8 +302,8 @@
 
         <Button
             android:id="@+id/btntime"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/svg_hour"
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -304,12 +312,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.824"
-            android:layout_marginRight="25dp"/>
+            android:layout_marginLeft="80dp"/>
 
         <Button
             android:id="@+id/btndate"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/svg_date"
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -318,15 +326,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.706"
-            android:layout_marginRight="25dp"/>
+            android:layout_marginLeft="80dp"/>
 
         <Button
             android:id="@+id/btnlocation"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/svg_location"
             android:text="Button"
+            android:layout_marginLeft="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.857"

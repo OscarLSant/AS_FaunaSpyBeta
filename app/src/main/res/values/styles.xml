@@ -3,4 +3,14 @@
     <style name="RoundedSearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:background">@drawable/rounded_search_view_background</item>
     </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+    <item name="android:layout_marginStart">0dp</item>
+    <item name="android:layout_marginEnd">0dp</item>
+    <item name="android:layout_marginTop">0dp</item>
+    <item name="android:layout_marginBottom">0dp</item>
+    <item name="android:paddingStart">0dp</item>
+    <item name="android:paddingEnd">0dp</item>
+    <item name="android:paddingTop">0dp</item>
+    <item name="android:paddingBottom">0dp</item>
+    </style>
 </resources>

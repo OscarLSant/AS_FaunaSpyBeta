@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeDetailsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="25dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="25dp">
+
+            <TextView
+                android:id="@+id/details_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre de la especie."
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.186"
+
+                />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/details_imgauthor"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/details_nameauthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_toRightOf="@id/details_imgauthor"
+                android:text="Nombre del autor"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/details_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_toRightOf="@id/details_nameauthor"
+                android:gravity="right"
+                android:text="DD/MM/AAAA"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/details_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toRightOf="@id/details_date"
+                android:gravity="right"
+                android:text="00:00"
+                android:textSize="15dp" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/details_img"
+            android:layout_width="280dp"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+            app:layout_constraintVertical_bias="0.032" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card2"
+            layout_height="wrap_content"
+            layout_width="match_parent"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_img"
+            app:layout_constraintVertical_bias="0.08">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="81dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/specie_img1"
+                    android:layout_width="50dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/specie_nametext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_toRightOf="@id/specie_img1"
+                    android:text="Specie name"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_genero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/specie_nametext"
+                    android:layout_toRightOf="@id/specie_img1"
+                    android:paddingTop="5dp"
+                    android:text="Género: "
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/specie_gender"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/specie_nametext"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@id/tv_genero"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="15dp"
+                    android:text="Email id"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/btndetails"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="270dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/svg_flechadetalles" />
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            layout_height="wrap_content"
+            layout_width="match_parent"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_img"
+            app:layout_constraintVertical_bias="0.946">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                map:cameraZoom="12"
+                map:uiRotateGestures="true" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

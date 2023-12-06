@@ -1,7 +1,10 @@
 package com.example.as_faunaspyv3;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -23,11 +27,14 @@ public class speciesFragment extends Fragment {
 
     RecyclerView recyclerView;
     SpeciesAdapter speciesAdapter;
+    androidx.appcompat.widget.SearchView searchView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String TOOLTIP_KEY_SPECIES = "tooltipShownSpecies";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,6 +77,20 @@ public class speciesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_species, container, false);
 
+        searchView = view.findViewById(R.id.search_view1);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean tooltipShown = sharedPreferences.getBoolean(TOOLTIP_KEY_SPECIES, false);
+
+        if (!tooltipShown) {
+            // Mostrar el tooltip por primera vez
+            showTooltip(searchView, "En este espacio puedes realizar búsquedas específicas de especies, así como examinar los detalles de cada una de ellas.");
+
+            // Actualizar el estado para indicar que el tooltip se ha mostrado
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(TOOLTIP_KEY_SPECIES, true);
+            editor.apply();
+        }
+
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -81,14 +102,52 @@ public class speciesFragment extends Fragment {
         speciesAdapter = new SpeciesAdapter(options);
         recyclerView.setAdapter(speciesAdapter);
         //speciesAdapter.startListening();
-        return view;
 
+        // Manejar eventos de búsqueda
+        // Configurar el SearchView
+        //searchView.setQueryHint("Buscar");
+        //searchView.setIconifiedByDefault(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                txtSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                txtSearch(query);
+                return false;
+            }
+        });
+
+
+        return view;
         //return inflater.inflate(R.layout.fragment_species, container, false);
+    }
+
+    private void txtSearch(String str) {
+        // Tu lógica de búsqueda aquí
+        FirebaseRecyclerOptions<SpeciesModel> options =
+                new FirebaseRecyclerOptions.Builder<SpeciesModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("species").orderByChild("name").startAt(str).endAt(str+"~"), SpeciesModel.class)
+                        .build();
+
+        SpeciesAdapter speciesAdapter1 = new SpeciesAdapter(options);
+        speciesAdapter1.startListening();
+        recyclerView.setAdapter(speciesAdapter1);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         speciesAdapter.startListening();
+    }
+
+    private void showTooltip(View view, String message) {
+        TapTargetView.showFor(requireActivity(),
+                TapTarget.forView(view, message)
+                        .cancelable(false)
+                        .tintTarget(true));
     }
 }

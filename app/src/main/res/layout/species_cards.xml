@@ -25,7 +25,7 @@
             android:id="@+id/details_nametext"
             android:text="Specie name"
             android:textStyle="bold"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:layout_toRightOf="@id/details_img1"
             android:layout_marginLeft="10dp"/>
 
@@ -35,7 +35,7 @@
             android:id="@+id/tv_genero"
             android:paddingTop="10dp"
             android:text="Génerooo: "
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:layout_toRightOf="@id/details_img1"
             android:layout_below="@id/details_nametext"
             android:layout_marginLeft="10dp"/>
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/details_gendertext"
             android:text="Email id"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:layout_toRightOf="@id/tv_genero"
             android:paddingTop="10dp"
             android:layout_below="@id/details_nametext"

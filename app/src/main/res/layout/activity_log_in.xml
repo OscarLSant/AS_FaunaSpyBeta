@@ -28,9 +28,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Inicia sesión"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
+                />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/img_logo"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -43,7 +51,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.578"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/svg_contrasenia"
                 >
 
@@ -51,6 +59,7 @@
                     android:id="@+id/login_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
                     tools:layout_editor_absoluteX="80dp"
                     tools:layout_editor_absoluteY="383dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -66,7 +75,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.578"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -92,7 +101,7 @@
                 android:id="@+id/signupRedirectText"
                 android:text="¿Aún no tienes cuenta?, Regístrate aquí"
                 android:layout_gravity="center"
-                android:padding="8dp"
+                android:padding="1dp"
                 android:layout_marginTop="15dp"
                 />
 

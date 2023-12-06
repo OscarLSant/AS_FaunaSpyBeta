@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/xml/shake_interpolator.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <cycleInterpolator
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:cycles="2"
+        android:factor="0.5"/>
+</set>

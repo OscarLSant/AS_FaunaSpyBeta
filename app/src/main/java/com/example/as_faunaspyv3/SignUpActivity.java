@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
@@ -40,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signupButton;
     private TextView loginRedirectText;
     private Button btnSelectImage;
-    private ImageView imageView;
+    private CircleImageView imageView;
     private static final int PICK_IMAGE_REQUEST = 1;
     Uri uri;
 
@@ -109,7 +111,9 @@ public class SignUpActivity extends AppCompatActivity {
                                         uploadProfileImage(userId);
                                         
                                         Snackbar.make(SignUpActivity.this.getCurrentFocus(), "Registro exitoso", Snackbar.LENGTH_SHORT).show();
-                                        startActivity(new Intent(SignUpActivity.this, LogInActivity.class));
+                                        //startActivity(new Intent(SignUpActivity.this, LogInActivity.class));
+                                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                        finish();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -190,21 +194,5 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    /*private void registrarUsuario(String name, String ape, String user, String pass) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-
-        auth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Snackbar.make(SignUpActivity.this.getCurrentFocus(), "Registro exitoso", Snackbar.LENGTH_SHORT).show();
-                    startActivity(new Intent(SignUpActivity.this, LogInActivity.class));
-                } else {
-                    Snackbar.make(SignUpActivity.this.getCurrentFocus(), "Error, " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }*/
 }
 
