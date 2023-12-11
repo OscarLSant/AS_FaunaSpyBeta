@@ -317,7 +317,7 @@ public class addAvistament extends Fragment {
                 openGallery();
             } else {
                 // Permiso denegado, muestra un mensaje o toma alguna acción apropiada
-                Toast.makeText(requireContext(), "Permiso denegado para acceder al almacenamiento", Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), "Permiso denegado para acceder al almacenamiento", Snackbar.LENGTH_SHORT).show();
             }
         }
     }

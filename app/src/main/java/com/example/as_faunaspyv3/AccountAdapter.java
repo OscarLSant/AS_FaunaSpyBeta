@@ -20,6 +20,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -100,13 +101,13 @@ public class AccountAdapter extends FirebaseRecyclerAdapter<AccountModel, Accoun
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 // La imagen se eliminó exitosamente
-                                                Toast.makeText(holder.nameSpecie.getContext(), "Datos e imagen eliminados con éxito", Toast.LENGTH_SHORT).show();
+                                                Snackbar.make(holder.nameSpecie, "Datos e imagen eliminados con éxito", Snackbar.LENGTH_SHORT).show();
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 // Manejar el fallo al eliminar la imagen
-                                                Toast.makeText(holder.nameSpecie.getContext(), "Error al eliminar la imagen", Toast.LENGTH_SHORT).show();
+                                                Snackbar.make(holder.nameSpecie, "Error al eliminar la imagen", Snackbar.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -124,7 +125,7 @@ public class AccountAdapter extends FirebaseRecyclerAdapter<AccountModel, Accoun
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(holder.nameSpecie.getContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(holder.nameSpecie, "Cancelled", Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 builder.show();
